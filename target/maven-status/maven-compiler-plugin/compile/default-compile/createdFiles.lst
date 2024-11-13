@@ -1,0 +1,7 @@
+org/mapper/ObjectMapper.class
+org/mapper/exception/ObjectMapperException.class
+org/mapper/example/Product.class
+org/mapper/configuration/MapperFieldConfig.class
+org/mapper/example/Main.class
+org/mapper/example/ProductDTO.class
+org/mapper/NumericConverter.class
