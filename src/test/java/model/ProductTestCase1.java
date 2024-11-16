@@ -1,14 +1,11 @@
 package model;
 
-import org.mapper.configuration.MapperFieldConfig;
-
 import java.math.BigDecimal;
 
-public class ProductTestCase4DTO {
+public class ProductTestCase1 {
     private String name;
     private String description;
-    @MapperFieldConfig(sourceAttributeName = "value")
-    private BigDecimal price;
+    private BigDecimal value;
     private Double stoque;
 
     public String getName() {
@@ -27,12 +24,12 @@ public class ProductTestCase4DTO {
         this.description = description;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public BigDecimal getValue() {
+        return value;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setValue(BigDecimal value) {
+        this.value = value;
     }
 
     public Double getStoque() {

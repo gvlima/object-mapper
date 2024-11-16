@@ -36,33 +36,16 @@ public class ObjectMapper {
                     Field inputField = inputFields.get(outputField.getName());
                     inputField.setAccessible(true);
 
-                    if(outputField.getType().equals(inputField.getType())){
-                        outputField.set(output, inputField.get(input));
-                        continue;
-                    }
-
-                    if(fieldAnnotation != null && fieldAnnotation.numericTypeConversion()){
-                        outputField.set(output, NumericConverter.convert(inputField.get(input), outputField.getType()));
-                        continue;
-                    }
-
-                    outputField.set(output, null);
+                    outputField.set(output, getFieldContent(input, inputField, outputField));
                     continue;
                 }
 
-                if(fieldAnnotation.sourceAttributeName() != null && inputFields.containsKey(fieldAnnotation.sourceAttributeName())){
+                if(fieldAnnotation != null && inputFields.containsKey(fieldAnnotation.sourceAttributeName())){
                     Field inputField = inputFields.get(fieldAnnotation.sourceAttributeName());
                     inputField.setAccessible(true);
 
-                    if(outputField.getType().equals(inputField.getType())){
-                        outputField.set(output, inputField.get(input));
-                        continue;
-                    }
-
-                    if(fieldAnnotation.numericTypeConversion()){
-                        outputField.set(output, NumericConverter.convert(inputField.get(input), outputField.getType()));
-                        continue;
-                    }
+                    outputField.set(output, getFieldContent(input, inputField, outputField));
+                    continue;
                 }
 
                 outputField.set(output, null);
@@ -73,5 +56,19 @@ public class ObjectMapper {
             logger.log(Level.WARNING, "Error occurred during object mapping");
             throw new ObjectMapperException(e);
         }
+    }
+
+    private <I>Object getFieldContent(I input, Field inputField, Field outputField) throws IllegalAccessException {
+        MapperFieldConfig fieldAnnotation = outputField.getAnnotation(MapperFieldConfig.class);
+
+        if(outputField.getType().equals(inputField.getType())){
+            return inputField.get(input);
+        }
+
+        if(fieldAnnotation != null && fieldAnnotation.numericTypeConversion()){
+            return NumericConverter.convert(inputField.get(input), outputField.getType());
+        }
+
+        return null;
     }
 }

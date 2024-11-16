@@ -1,11 +1,8 @@
 package model;
 
-import org.mapper.configuration.MapperFieldConfig;
-
-public class ProductTestCase2DTO {
+public class ProductTestCase3 {
     private String name;
     private String description;
-    @MapperFieldConfig(numericTypeConversion = true)
     private Double value;
     private Double stoque;
 

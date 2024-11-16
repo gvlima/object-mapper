@@ -1,15 +1,12 @@
-import model.ProductTestCase1DTO;
-import model.ProductTestCase2DTO;
-import model.ProductTestCase3DTO;
-import model.ProductTestCase4DTO;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import model.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.mapper.ObjectMapper;
 import org.mapper.example.Product;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 import java.util.UUID;
 
 public class ObjectMapperTest {
@@ -22,47 +19,58 @@ public class ObjectMapperTest {
     private final BigDecimal VALUE = BigDecimal.valueOf(100);
     private final Double STOQUE = 100.0;
 
-    @Before
-    public void setUp(){
+    @BeforeEach
+    public void setup(){
         product = new Product(UUID.randomUUID().toString(), NAME, DESCRIPTION, VALUE, STOQUE);
         objectMapper = new ObjectMapper();
     }
 
     @Test
+    @DisplayName("Should convert and return full DTO object")
     public void shouldReturnDTO(){
-        var result = objectMapper.transform(product, ProductTestCase1DTO.class);
+        var result = objectMapper.transform(product, ProductTestCase1.class);
 
-        Assert.assertNotNull(result);
-        Assert.assertEquals(NAME, result.getName());
-        Assert.assertEquals(DESCRIPTION, result.getDescription());
-        Assert.assertEquals(VALUE, result.getValue());
-        Assert.assertEquals(STOQUE, result.getStoque());
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(product.getName(), result.getName());
+        Assertions.assertEquals(product.getDescription(), result.getDescription());
+        Assertions.assertEquals(product.getValue(), result.getValue());
+        Assertions.assertEquals(product.getStoque(), result.getStoque());
     }
 
     @Test
-    public void shouldConvertValueFieldToDouble(){
-        var result = objectMapper.transform(product, ProductTestCase2DTO.class);
+    @DisplayName("Should automatically convert type from BigDecimal to Double")
+    public void shouldAutomaticallyConvertFieldType(){
+        var result = objectMapper.transform(product, ProductTestCase2.class);
 
-        Assert.assertNotNull(result);
-        Assert.assertEquals(Optional.of(product.getValue().doubleValue()).get(), result.getValue());
-        Assert.assertEquals(Double.class, result.getValue().getClass());
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(product.getName(), result.getName());
+        Assertions.assertEquals(product.getDescription(), result.getDescription());
+        Assertions.assertEquals(Double.class, result.getValue().getClass());
+        Assertions.assertEquals(100.0D, result.getValue());
+        Assertions.assertEquals(product.getStoque(), result.getStoque());
     }
 
     @Test
-    public void whenFieldIsDifferentClassShouldNotConvertAndSetFieldToNull(){
-        var result = objectMapper.transform(product, ProductTestCase3DTO.class);
+    @DisplayName("Should return null when source and destination fields are different types")
+    public void whenFieldIsDifferentClassShouldNotConvert(){
+        var result = objectMapper.transform(product, ProductTestCase3.class);
 
-        Assert.assertNotNull(result);
-        Assert.assertNull(result.getValue());
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(product.getName(), result.getName());
+        Assertions.assertEquals(product.getDescription(), result.getDescription());
+        Assertions.assertNull(result.getValue());
+        Assertions.assertEquals(product.getStoque(), result.getStoque());
     }
 
     @Test
+    @DisplayName("Should get field content from annotation")
     public void shouldGetFieldFromAnnotationSourceName(){
-        var result = objectMapper.transform(product, ProductTestCase4DTO.class);
+        var result = objectMapper.transform(product, ProductTestCase4.class);
 
-        Assert.assertNotNull(result);
-        Assert.assertNotNull(result.getPrice());
-        Assert.assertEquals(product.getValue(), result.getPrice());
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(product.getName(), result.getName());
+        Assertions.assertEquals(product.getDescription(), result.getDescription());
+        Assertions.assertNotNull(result.getPrice());
+        Assertions.assertEquals(product.getValue(), result.getPrice());
     }
-
 }
