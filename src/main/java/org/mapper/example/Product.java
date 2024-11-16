@@ -17,6 +17,46 @@ public class Product {
         this.stoque = stoque;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public BigDecimal getValue() {
+        return value;
+    }
+
+    public void setValue(BigDecimal value) {
+        this.value = value;
+    }
+
+    public Double getStoque() {
+        return stoque;
+    }
+
+    public void setStoque(Double stoque) {
+        this.stoque = stoque;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
