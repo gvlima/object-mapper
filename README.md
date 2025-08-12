@@ -7,9 +7,8 @@ This repository provides a basic implementation of an object mapper, leveraging 
 - MapperFieldConfig: A custom annotation for configuring mapping behavior enabling the numeric type converter and custom source attribute mappings.
 
 ### Key Mapping Features:
-- Automatic Mapping: Attributes with identical names in both source and destination objects are automatically mapped.
-- Attributes with different names can be mapped using the @MapperFieldConfig annotation. Specify the source attribute name using the sourceAttributeName property.
-- Numeric Type Conversion: Enable automatic conversion between numeric types for attributes with compatible data types. Use the numericTypeConversion property of the @MapperFieldConfig annotation.
+- <b>Automatic Mapping:</b> Attributes with identical names in both source and destination objects are automatically mapped. Attributes with different names can be mapped using the <i>@MapperFieldConfig</i> annotation. Specify the source attribute name using the sourceAttributeName property.
+- <b>Numeric Type Conversion:</b> Enable automatic conversion between numeric types for attributes with compatible data types. Use the numericTypeConversion property of the <i>@MapperFieldConfig</i> annotation.
 
 
 ### Example
